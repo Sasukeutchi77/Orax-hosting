@@ -1,0 +1,82 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Profil utilisateur client ou administrateur ORAX-HOSTING",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "displayName": { "type": "string" },
+        "walletBalanceCFA": { "type": "number" },
+        "serverCount": { "type": "number" },
+        "phoneNumber": { "type": "string" },
+        "status": { "type": "string" },
+        "role": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["email", "walletBalanceCFA", "role"]
+    },
+    "HostingServer": {
+      "title": "HostingServer",
+      "description": "Instance serveur VPS, Game ou Bot hébergée sur ORAX-HOSTING",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "planName": { "type": "string" },
+        "category": { "type": "string" },
+        "specs": { "type": "object" },
+        "userId": { "type": "string" },
+        "userEmail": { "type": "string" },
+        "priceCFA": { "type": "number" },
+        "billingCycle": { "type": "string" },
+        "paymentMethod": { "type": "string" },
+        "paymentPhone": { "type": "string" },
+        "transactionReference": { "type": "string" },
+        "status": { "type": "string" },
+        "ipAddress": { "type": "string" },
+        "nodeLocation": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "validatedAt": { "type": "string" },
+        "rejectedAt": { "type": "string" },
+        "rejectionReason": { "type": "string" }
+      },
+      "required": ["name", "planName", "priceCFA", "status", "userId"]
+    },
+    "FinancialTransaction": {
+      "title": "FinancialTransaction",
+      "description": "Journal de transaction financière en Francs CFA (Mobile Money ou Portefeuille)",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "userEmail": { "type": "string" },
+        "serverId": { "type": "string" },
+        "serverName": { "type": "string" },
+        "amountCFA": { "type": "number" },
+        "type": { "type": "string" },
+        "paymentMethod": { "type": "string" },
+        "transactionReference": { "type": "string" },
+        "status": { "type": "string" },
+        "timestamp": { "type": "string" },
+        "description": { "type": "string" }
+      },
+      "required": ["amountCFA", "type", "status", "timestamp"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "Collection des membres et soldes de portefeuille en FCFA"
+    },
+    "/servers/{serverId}": {
+      "schema": "HostingServer",
+      "description": "Collection des serveurs d'hébergement commandés et actifs"
+    },
+    "/transactions/{transactionId}": {
+      "schema": "FinancialTransaction",
+      "description": "Journal d'audit des transactions financières en Francs CFA"
+    }
+  }
+}

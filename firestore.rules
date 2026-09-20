@@ -1,0 +1,44 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && (
+        request.auth.token.email == 'lordmakima99@gmail.com' ||
+        (request.auth.token.email != null && request.auth.token.email.matches('.*admin.*')) ||
+        (request.auth.token.email != null && request.auth.token.email.matches('.*orax.*'))
+      );
+    }
+
+    // Global default-deny rule
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Users and Members collection: ORAX-HOSTING clients and administrators
+    match /users/{userId} {
+      allow read, write: if true;
+    }
+
+    // Hosting Servers collection: VPS, Game Servers, and Discord Bot PaaS
+    match /servers/{serverId} {
+      allow read, write: if true;
+    }
+
+    // Financial Transactions collection: Mobile Money & Wallet logs in CFA
+    match /transactions/{transactionId} {
+      allow read, write: if true;
+    }
+
+    // Health check / Connection test document
+    match /test/{testId} {
+      allow read: if true;
+    }
+  }
+}

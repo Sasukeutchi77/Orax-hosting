@@ -1,0 +1,6 @@
+{
+  "name": "ORAX-ADMIN",
+  "description": "Plateforme d'administration web pour surveiller et gérer le service d'hébergement ORAX-HOSTING.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
